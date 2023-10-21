@@ -1,7 +1,5 @@
 package ghost.titleprevent.mixin.client;
 
-import net.fabricmc.loader.impl.util.log.Log;
-import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,14 +17,12 @@ public class InGameHudMixin {
     private int titleRemainTicks;
     @Unique
     private final String[] titleBlacklist =
-            {"UNCOMMON DROP!", "RARE DROP!", "CRAZY RARE DROP!", "PRAY TO RNGESUS DROP!"};
+            {"§a§lUNCOMMON DROP!", "§9§lRARE DROP!", "§d§lCRAZY RARE DROP!", "§5§lPRAY TO RNGESUS DROP!",
+                    "§f§lUNCOMMON DROP!", "§f§lRARE DROP!", "§f§lCRAZY RARE DROP!", "§f§lPRAY TO RNGESUS DROP!"};
 
     @Inject(method = "render(Lnet/minecraft/client/gui/DrawContext;F)V", at = @At("HEAD"))
     private void preRenderHud(CallbackInfo ci) {
-
         if (title != null) {
-            Log.info(LogCategory.LOG, title.getString());
-
             for (String item : titleBlacklist) {
                 if (title != null && title.getString().equals(item)) {
                     title = null;
